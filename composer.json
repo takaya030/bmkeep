@@ -7,13 +7,20 @@
         "laravel"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/takaya030/oauth-8-laravel"
+        }
+    ],
     "require": {
         "php": "^7.3",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "takaya030/oauth-8-laravel": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
