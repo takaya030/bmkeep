@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('login', 'App\Http\Controllers\PocketController@loginOAuth' );
+Route::get('loginresult', 'App\Http\Controllers\PocketController@loginResult' );
+
 // Test Session
 Route::get('/test', function (\Illuminate\Http\Request $request) {
 
