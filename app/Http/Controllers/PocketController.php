@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Pocket\Client as PocketClient;
+
 class PocketController extends Controller
 {
 	public function loginOAuth(Request $request)
@@ -56,5 +58,18 @@ class PocketController extends Controller
 		{
 			dd('code is null.');
 		}
+	}
+
+	public function getRetrieve(Request $request)
+	{
+		$client = new PocketClient();
+
+		$result = $client->retrieve([
+			'state' => 'all',
+			'sort' => 'newest',
+			'count' => '3',
+		]);
+
+		dd($result);
 	}
 }
