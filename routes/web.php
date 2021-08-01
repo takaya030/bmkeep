@@ -21,38 +21,3 @@ Route::get('/', function () {
 
 Route::get('login', 'App\Http\Controllers\PocketController@loginOAuth' );
 Route::get('loginresult', 'App\Http\Controllers\PocketController@loginResult' );
-
-// Test Session
-Route::get('/test', function (\Illuminate\Http\Request $request) {
-
-    $counter = $request->session()->get('counter') ?: 0;
-    $request->session()->put('counter', ++$counter);
-
-    return response()->json([
-        'session.counter' => $request->session()->get('counter')
-    ]);
-});
-
-// Test Firestore
-Route::get('/firestore', function (\Illuminate\Http\Request $request) {
-
-	$projectId = 'twichan';
-	$keyFilePath = storage_path( 'app\\twichan-abcb81dead0e.json' );
-
-	// Instantiate the Firestore Client for your project ID.
-	$firestore = new FirestoreClient([
-		'projectId' => $projectId,
-		'keyFilePath' => $keyFilePath,
-	]);
-
-	$collectionReference = $firestore->collection('Users');
-	$userId = '1234';
-	$documentReference = $collectionReference->document($userId);
-	$snapshot = $documentReference->snapshot();
-
-	//echo "Hello " . $snapshot['firstName'];
-
-    return response()->json([
-        'result' => "Hello " . $snapshot['firstName'],
-    ]);
-});
