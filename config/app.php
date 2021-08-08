@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // App\Providers\SessionServiceProvider::class,
 
-		Takaya030\OAuth\OAuthServiceProvider::class,
+		App\Providers\OAuthServiceProvider::class,
     ],
 
     /*
