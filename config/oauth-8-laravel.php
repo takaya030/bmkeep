@@ -25,6 +25,12 @@ return [
 			'scope'         => [],
 		],
 
+		'HatenaBookmark' => [
+			'client_id'     => env('HATENA_CLIENT_ID'),
+			'client_secret' => env('HATENA_CLIENT_SECRET'),
+			// No scope - oauth1 doesn't need scope
+		],
+
 	]
 
 ];
