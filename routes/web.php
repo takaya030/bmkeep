@@ -22,3 +22,4 @@ Route::get('/', function () {
 Route::get('login', 'App\Http\Controllers\PocketController@loginOAuth' );
 Route::get('loginresult', 'App\Http\Controllers\PocketController@loginResult' );
 Route::get('retrieve', 'App\Http\Controllers\PocketController@getRetrieve' );
+Route::get('loginhatena', 'App\Http\Controllers\HatenaController@loginWithHatena' );
