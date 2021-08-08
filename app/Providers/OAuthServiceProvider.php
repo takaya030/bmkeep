@@ -36,9 +36,12 @@ class OAuthServiceProvider extends ServiceProvider {
     public function register()
     {
         // Register 'oauth'
-        $this->app->singleton(OAuth::class, function ($app) {
+        $this->app->singleton(\Takaya030\OAuth\OAuth::class, function ($app) {
             // create oAuth instance
-            $oauth = new OAuth();
+            $oauth = new \Takaya030\OAuth\OAuth();
+
+			// register custom service
+			$oauth->registerService('HatenaBookmark', \App\Models\OAuth\Service\HatenaBookmark::class);
 
             // return oAuth instance
             return $oauth;
