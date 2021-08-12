@@ -35,5 +35,17 @@ class Client
 
 		return $result;
 	}
+
+	public function tags_replace( string $params )
+	{
+		$query = [ 'actions' => '[' . $params . ']' ] + $this->common_params;
+		$query_str = http_build_query( $query);
+		$response = $this->client->request('POST', '/v3/send?' . $query_str );
+
+		$response_body = (string)$response->getBody();
+		$result = json_decode( $response_body );
+
+		return $result;
+	}
 }
 
