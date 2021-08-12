@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Pocket\Client as PocketClient;
+use App\Models\Pocket\Item as PocketItem;
+use App\Models\HatenaBookmark\OAuthClient as HatenaClient;
 
 class PocketController extends Controller
 {
@@ -67,10 +69,25 @@ class PocketController extends Controller
 		$result = $client->retrieve([
 			'state' => 'all',
 			'sort' => 'oldest',
-			'tag' => 'keep',
-			'count' => '3',
+			'tag' => config('pocket.keep_tag'),
+			'count' => config('pocket.items_count'),
 		]);
 
-		dd($result);
+		$pocket_items = [];
+		foreach( $result->list as $item )
+		{
+			$pocket_items[] = new PocketItem( $item );
+		}
+
+		// post Hatena
+		$hatena = new HatenaClient();
+		foreach( $pocket_items as $item )
+		{
+			$hatena_result = $hatena->postBookmark( $item->get_param_post_hatena() );
+		}
+
+		// tags replace
+
+		dd($hatena_result);
 	}
 }
