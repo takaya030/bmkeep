@@ -30,7 +30,14 @@ class OAuthClient
 	public function getBookmark( string $url )
 	{
 		$result = json_decode($this->service->request('my/bookmark?url=' . rawurlencode($url),'GET'), true);
-		//$result = json_decode($this->service->request('my/tags','GET'), true);
+
+		return $result;
+	}
+
+	public function postBookmark( string $param )
+	{
+		$query = $param;
+		$result = json_decode($this->service->request('my/bookmark?' . $query, 'POST'), true);
 
 		return $result;
 	}
