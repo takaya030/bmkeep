@@ -66,7 +66,8 @@ class PocketController extends Controller
 
 		$result = $client->retrieve([
 			'state' => 'all',
-			'sort' => 'newest',
+			'sort' => 'oldest',
+			'tag' => 'keep',
 			'count' => '3',
 		]);
 
