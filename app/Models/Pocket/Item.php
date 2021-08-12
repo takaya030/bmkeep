@@ -61,9 +61,10 @@ class Item
 
 	public function get_param_tags_replace()
 	{
-		return [
-			'item_id' => $this->item_id,
-			'tags' => $this->tags,
-		];
+		return json_encode([
+			'action'	=> 'tags_replace',
+			'item_id'	=> $this->item_id,
+			'tags'		=> implode( ',', $this->tags ),
+		]);
 	}
 }
