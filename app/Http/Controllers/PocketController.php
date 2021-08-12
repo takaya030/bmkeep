@@ -87,7 +87,11 @@ class PocketController extends Controller
 		}
 
 		// tags replace
+		foreach( $pocket_items as $item )
+		{
+			$tags_result = $client->tags_replace( $item->get_param_tags_replace() );
+		}
 
-		dd($hatena_result);
+		dd($tags_result);
 	}
 }
