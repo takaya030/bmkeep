@@ -33,7 +33,7 @@ class HatenaBookmark extends AbstractService
      */
     public function getRequestTokenEndpoint()
     {
-        return new Uri('https://www.hatena.com/oauth/initiate');
+        return new Uri('https://www.hatena.com/oauth/initiate?scope=read_public%2Cwrite_public');
     }
 
     /**
