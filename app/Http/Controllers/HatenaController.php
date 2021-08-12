@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use \App\Models\HatenaBookmark\OAuthClient;
+
 class HatenaController extends Controller
 {
 	public function loginWithHatena(Request $request)
@@ -39,5 +41,12 @@ class HatenaController extends Controller
 			// return to hatena login url
 			return redirect((string)$url);
 		}
+	}
+
+	public function getBookmark( Request $request )
+	{
+		$tmb = new OAuthClient();
+		$result = $tmb->getBookmark( 'https://nakka-k.hatenablog.com/entry/2019/06/04/191906' );
+		dd($result);
 	}
 }
