@@ -36,10 +36,21 @@ class Client
 		return $result;
 	}
 
-	public function tags_replace( string $params )
+	public function send_actions( $params )
 	{
-		$query = [ 'actions' => '[' . $params . ']' ] + $this->common_params;
-		$query_str = http_build_query( $query);
+		if( is_string($params) )
+		{
+			$query = array_merge( [ 'actions' => '[' . $params . ']' ],  $this->common_params );
+		}
+		elseif( is_array($params) )
+		{
+			$query = array_merge( [ 'actions' => '[' . implode(',', $params) . ']' ],  $this->common_params );
+		}
+		else
+		{
+			return ["msg" => "params is invalid type."];
+		}
+		$query_str = http_build_query( $query );
 		$response = $this->client->request('POST', '/v3/send?' . $query_str );
 
 		$response_body = (string)$response->getBody();
