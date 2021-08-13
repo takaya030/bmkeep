@@ -86,10 +86,17 @@ class PocketController extends Controller
 			$hatena_result = $hatena->postBookmark( $item->get_param_post_hatena() );
 		}
 
-		// tags replace
+		// tag replace
+		$actions = [];
 		foreach( $pocket_items as $item )
 		{
-			$tags_result = $client->tags_replace( $item->get_param_tags_replace() );
+			$actions = array_merge( $actions, $item->get_param_tag_replace() );
+		}
+
+		$tags_result = [];
+		if( !empty($actions) )
+		{
+			$tags_result = $client->send_actions( $actions );
 		}
 
 		dd($tags_result);
