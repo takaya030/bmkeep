@@ -59,12 +59,19 @@ class Item
 		return $url_str;
 	}
 
-	public function get_param_tags_replace()
+	public function get_param_tag_replace()
 	{
-		return json_encode([
-			'action'	=> 'tags_replace',
-			'item_id'	=> $this->item_id,
-			'tags'		=> implode( ',', $this->tags ),
-		]);
+		return [
+			json_encode([
+				'action'	=> 'tags_remove',
+				'item_id'	=> $this->item_id,
+				'tags'		=> config('pocket.keep_tag'),
+			]),
+			json_encode([
+				'action'	=> 'tags_add',
+				'item_id'	=> $this->item_id,
+				'tags'		=> config('pocket.kept_tag'),
+			])
+		];
 	}
 }
