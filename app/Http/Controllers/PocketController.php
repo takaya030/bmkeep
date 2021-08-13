@@ -99,6 +99,6 @@ class PocketController extends Controller
 			$tags_result = $client->send_actions( $actions );
 		}
 
-		dd($tags_result);
+		return response()->json($tags_result);
 	}
 }
