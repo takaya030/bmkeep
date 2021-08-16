@@ -16,3 +16,8 @@ RUN chmod 777 -R /var/www/storage/ && \
     echo "Listen 8080" >> /etc/apache2/ports.conf && \
     chown -R www-data:www-data /var/www/ && \
     a2enmod rewrite
+
+WORKDIR /var/www
+RUN php artisan optimize:clear && \
+	php artisan optimize && \
+	php artisan view:cache
