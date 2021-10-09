@@ -13,6 +13,7 @@ return [
 
 	'items_count' 	=> env('POCKET_ITEMS_COUNT'),
 	'kept_items_count' => env('POCKET_KEPT_ITEMS_COUNT'),
+	'kept_delete_delay_days' => env('POCKET_KEPT_DELETE_DELAY_DAYS'),
 	'keep_tag' 		=> env('POCKET_KEEP_TAG'),
 	'kept_tag' 		=> env('POCKET_KEPT_TAG'),
 

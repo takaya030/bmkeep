@@ -2,6 +2,8 @@
 
 namespace App\Models\Pocket;
 
+use Carbon\Carbon;
+
 /**
  * parser of Pocket post item
  */
@@ -9,6 +11,7 @@ class Item
 {
 	protected	$item_id;
 	protected	$url;		// resolved url (source url)
+	protected	$time_added;	// unixtimestamp
 	protected	$tags;
 
 
@@ -24,6 +27,7 @@ class Item
 	private function parse( $list_item )
 	{
 		$this->item_id = $list_item->item_id;
+		$this->time_added = $list_item->time_added;
 
 		$this->url = property_exists( $list_item, "resolved_url" ) ?
 			$list_item->resolved_url : 
@@ -42,6 +46,13 @@ class Item
 	protected function replace_tag( string $before, string $after )
 	{
 		$this->tags = str_replace( $before, $after, $this->tags );
+	}
+
+	public function is_target_delete_kept()
+	{
+		$target_time = (int)$this->time_added + 86400 * config('pocket.kept_delete_delay_days');
+
+		return Carbon::now()->timestamp > $target_time;
 	}
 
 	public function get_param_post_hatena()

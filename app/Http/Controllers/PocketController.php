@@ -134,7 +134,8 @@ class PocketController extends Controller
 			$actions = [];
 			foreach( $pocket_items as $item )
 			{
-				$actions = array_merge( $actions, $item->get_param_delete() );
+				if( $item->is_target_delete_kept() )
+					$actions = array_merge( $actions, $item->get_param_delete() );
 			}
 
 			$delete_result = [];
