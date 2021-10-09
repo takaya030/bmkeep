@@ -111,4 +111,42 @@ class PocketController extends Controller
 
 		return [];
 	}
+
+	public function getDelkept(Request $request)
+	{
+		try {
+			$client = new PocketClient();
+
+			$result = $client->retrieve([
+				'state' => 'all',
+				'sort' => 'oldest',
+				'tag' => config('pocket.kept_tag'),
+				'count' => config('pocket.kept_items_count'),
+			]);
+
+			$pocket_items = [];
+			foreach( $result->list as $item )
+			{
+				$pocket_items[] = new PocketItem( $item );
+			}
+
+			// action delete
+			$actions = [];
+			foreach( $pocket_items as $item )
+			{
+				$actions = array_merge( $actions, $item->get_param_delete() );
+			}
+
+			$delete_result = [];
+			if( !empty($actions) )
+			{
+				$delete_result = $client->send_actions( $actions );
+			}
+
+			return response()->json($delete_result);
+		}
+		catch( TokenResponseException $e ) {
+			return response()->json([ 'error' => $e->getMessage() ]);
+		}
+	}
 }

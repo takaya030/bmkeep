@@ -22,5 +22,6 @@ Route::get('/', function () {
 Route::get('login', 'App\Http\Controllers\PocketController@loginOAuth' );
 Route::get('loginresult', 'App\Http\Controllers\PocketController@loginResult' );
 Route::get('retrieve', 'App\Http\Controllers\PocketController@getRetrieve' );
+Route::get('delkept', 'App\Http\Controllers\PocketController@getDelkept' );
 Route::get('loginhatena', 'App\Http\Controllers\HatenaController@loginWithHatena' );
 Route::get('bookmark', 'App\Http\Controllers\HatenaController@getBookmark' );

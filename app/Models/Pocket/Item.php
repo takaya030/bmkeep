@@ -74,4 +74,14 @@ class Item
 			])
 		];
 	}
+
+	public function get_param_delete()
+	{
+		return [
+			json_encode([
+				'action'	=> 'delete',
+				'item_id'	=> $this->item_id,
+			])
+		];
+	}
 }
