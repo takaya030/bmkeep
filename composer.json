@@ -20,6 +20,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "league/oauth1-client": "^1.10",
         "takaya030/oauth-8-laravel": "dev-master"
     },
     "require-dev": {
