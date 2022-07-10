@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \App\Models\HatenaBookmark\OAuthClient;
+use \App\Models\HatenaBookmark\LeagueOAuthClient;
 
 class HatenaController extends Controller
 {
@@ -45,8 +46,12 @@ class HatenaController extends Controller
 
 	public function getBookmark( Request $request )
 	{
+		/*
 		$tmb = new OAuthClient();
 		$result = $tmb->getBookmark( 'https://nakka-k.hatenablog.com/entry/2019/06/04/191906' );
+		*/
+		$hbm = new LeagueOAuthClient();
+		$result = $hbm->getBookmark( 'https://nakka-k.hatenablog.com/entry/2019/06/04/191906' );
 		dd($result);
 	}
 }
