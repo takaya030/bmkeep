@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Pocket\Client as PocketClient;
 use App\Models\Pocket\Item as PocketItem;
-use App\Models\HatenaBookmark\OAuthClient as HatenaClient;
+use App\Models\HatenaBookmark\LeagueOAuthClient as HatenaClient;
 
 class PocketController extends Controller
 {
