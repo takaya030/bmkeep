@@ -1,5 +1,5 @@
 # composer 用
-FROM composer:2 as build
+FROM composer:2.0.8 as build
 WORKDIR /app
 COPY . /app
 RUN composer install --no-dev
