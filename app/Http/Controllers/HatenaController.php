@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \App\Models\HatenaBookmark\OAuthClient;
+use \App\Models\OAuth\League\HatenaBookmark;
 use \App\Models\HatenaBookmark\LeagueOAuthClient;
 
 class HatenaController extends Controller
@@ -16,40 +16,45 @@ class HatenaController extends Controller
 		$verify = $request->get('oauth_verifier');
 		
 		// get HatenaBookmark service
-		$tmb = \OAuth::consumer('HatenaBookmark');
+		$service = new \App\Models\OAuth\League\Hatenabookmark([
+			'identifier' => config('hatenabookmark.client_id'),
+			'secret' => config('hatenabookmark.client_secret'),
+			'callback_uri' => url('/loginhatena'),
+		]);
 		
 		// check if code is valid
 		
 		// if code is provided get user data and sign in
 		if ( ! is_null($token) && ! is_null($verify))
 		{
-			// This was a callback request from hatena, get the token
-			$token = $tmb->requestAccessToken($token, $verify);
-			
+			// Retrieve the temporary credentials we saved before
+			$temporaryCredentials = $request->session()->get('temporary_credentials');
+
+			// We will now retrieve token credentials from the server
+			$tokenCredentials = $service->getTokenCredentials($temporaryCredentials, $token, $verify);	
+
 			//Var_dump
 			//display whole array.
-			dd($token);
+			dd($tokenCredentials);
 		}
 		// if not ask for permission first
 		else
 		{
-			// get request token
-			$reqToken = $tmb->requestRequestToken();
-			
-			// get Authorization Uri sending the request token
-			$url = $tmb->getAuthorizationUri(['oauth_token' => $reqToken->getRequestToken()]);
+			// Retrieve temporary credentials
+			$temporaryCredentials = $service->getTemporaryCredentials();
 
-			// return to hatena login url
+			// Store credentials in the session, we'll need them later
+			$request->session()->put('temporary_credentials', $temporaryCredentials);
+
+			// Second part of OAuth 1.0 authentication is to redirect the
+			// resource owner to the login screen on the server.
+			$url = $service->getAuthorizationUrl($temporaryCredentials);
 			return redirect((string)$url);
 		}
 	}
 
 	public function getBookmark( Request $request )
 	{
-		/*
-		$tmb = new OAuthClient();
-		$result = $tmb->getBookmark( 'https://nakka-k.hatenablog.com/entry/2019/06/04/191906' );
-		*/
 		$hbm = new LeagueOAuthClient();
 		$result = $hbm->getBookmark( 'https://nakka-k.hatenablog.com/entry/2019/06/04/191906' );
 		dd($result);
