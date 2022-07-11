@@ -21,7 +21,7 @@ class LeagueOAuthClient
 	protected function getOauthService()
 	{
 		// Create server
-		$service = new \App\Models\OAuth\League\Hatenabookmark(array(
+		$service = new \App\Models\OAuth\League\HatenaBookmark(array(
 			'identifier' => config('hatenabookmark.client_id'),
 			'secret' => config('hatenabookmark.client_secret'),
 			'callback_uri' => "http://localhost/",

@@ -7,7 +7,7 @@ use League\OAuth1\Client\Credentials\TokenCredentials;
 use LogicException;
 use RuntimeException;
 
-class Hatenabookmark extends Server
+class HatenaBookmark extends Server
 {
     /**
      * @inheritDoc

@@ -16,7 +16,7 @@ class HatenaController extends Controller
 		$verify = $request->get('oauth_verifier');
 		
 		// get HatenaBookmark service
-		$service = new \App\Models\OAuth\League\Hatenabookmark([
+		$service = new HatenaBookmark([
 			'identifier' => config('hatenabookmark.client_id'),
 			'secret' => config('hatenabookmark.client_secret'),
 			'callback_uri' => url('/loginhatena'),
