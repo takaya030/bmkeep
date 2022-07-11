@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Hatenabookmark;
+namespace App\Models\HatenaBookmark;
 
 use Throwable;
 
