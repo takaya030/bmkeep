@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7cddf37abc70638ce390bcd2d163b36",
+    "content-hash": "71e1a96c5701aa3f6081fa3567496fb3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1728,77 +1728,6 @@
                 "source": "https://github.com/thephpleague/oauth1-client/tree/v1.10.1"
             },
             "time": "2022-04-15T14:02:14+00:00"
-        },
-        {
-            "name": "lusitanian/oauth",
-            "version": "v0.8.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Lusitanian/PHPoAuthLib.git",
-                "reference": "fc11a53db4b66da555a6a11fce294f574a8374f9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Lusitanian/PHPoAuthLib/zipball/fc11a53db4b66da555a6a11fce294f574a8374f9",
-                "reference": "fc11a53db4b66da555a6a11fce294f574a8374f9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "predis/predis": "0.8.*@dev",
-                "squizlabs/php_codesniffer": "2.*",
-                "symfony/http-foundation": "~2.1"
-            },
-            "suggest": {
-                "ext-openssl": "Allows for usage of secure connections with the stream-based HTTP client.",
-                "predis/predis": "Allows using the Redis storage backend.",
-                "symfony/http-foundation": "Allows using the Symfony Session storage backend."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "OAuth": "src",
-                    "OAuth\\Unit": "tests"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David Desberg",
-                    "email": "david@daviddesberg.com"
-                },
-                {
-                    "name": "Elliot Chance",
-                    "email": "elliotchance@gmail.com"
-                },
-                {
-                    "name": "Pieter Hordijk",
-                    "email": "info@pieterhordijk.com"
-                }
-            ],
-            "description": "PHP 5.3+ oAuth 1/2 Library",
-            "keywords": [
-                "Authentication",
-                "authorization",
-                "oauth",
-                "security"
-            ],
-            "support": {
-                "issues": "https://github.com/Lusitanian/PHPoAuthLib/issues",
-                "source": "https://github.com/Lusitanian/PHPoAuthLib/tree/master"
-            },
-            "time": "2018-02-14T22:37:14+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5278,63 +5207,6 @@
             "time": "2022-05-21T10:24:18+00:00"
         },
         {
-            "name": "takaya030/oauth-8-laravel",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/takaya030/oauth-8-laravel.git",
-                "reference": "367c2de46c1e4df06f417ea5a8c0e6d7f9e425fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/takaya030/oauth-8-laravel/zipball/367c2de46c1e4df06f417ea5a8c0e6d7f9e425fb",
-                "reference": "367c2de46c1e4df06f417ea5a8c0e6d7f9e425fb",
-                "shasum": ""
-            },
-            "require": {
-                "lusitanian/oauth": "*",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "illuminate/support": "~5"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Takaya030\\OAuth": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Artdarek",
-                    "email": "artdarek@gmail.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "takaya030",
-                    "email": "takaya030@yahoo.co.jp",
-                    "role": "Developer"
-                }
-            ],
-            "description": "OAuth Service Provider for Laravel 8",
-            "homepage": "https://github.com/takaya030/oauth-8-laravel",
-            "keywords": [
-                "Lusitanian",
-                "OAuth",
-                "laravel",
-                "php"
-            ],
-            "support": {
-                "source": "https://github.com/takaya030/oauth-8-laravel/tree/master",
-                "issues": "https://github.com/takaya030/oauth-8-laravel/issues"
-            },
-            "time": "2021-11-27T15:23:52+00:00"
-        },
-        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "2.2.4",
             "source": {
@@ -8037,9 +7909,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "takaya030/oauth-8-laravel": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

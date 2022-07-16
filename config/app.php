@@ -175,8 +175,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // App\Providers\SessionServiceProvider::class,
-
-        Takaya030\OAuth\OAuthServiceProvider::class,
     ],
 
     /*
@@ -228,8 +226,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
-		'OAuth'     => Takaya030\OAuth\Facade\OAuth::class,
     ],
 
 ];
