@@ -1,11 +1,11 @@
 # composer 用
-FROM composer:2.0.8 as build
+FROM composer:2 as build
 WORKDIR /app
 COPY . /app
 RUN composer install --no-dev
 
 # Laravel の実行環境用のコンテナ
-FROM php:7.4-apache
+FROM php:8.0-apache
 #RUN docker-php-ext-install pdo pdo_mysql
 
 EXPOSE 8080
