@@ -14,6 +14,45 @@ class PocketController extends Controller
 {
 	public function loginOAuth(Request $request)
 	{
+		$clear = $request->get('clear');
+		if(!empty($clear))
+		{
+			$request->session()->forget('code');
+		}
+		$code = $request->session()->get('code');
+
+		try {
+
+			$client = new PocketClient();
+
+			if (is_null($code))
+			{
+				$request_token = $client->get_request_token( url('/login') );
+
+				if( isset($request_token['code']) )
+				{
+					$request->session()->put( 'code', $request_token['code'] );
+					return redirect( $client->get_redirect_authorize($request_token['code'], url('/login')) );
+				}
+
+				return response()->json([ 'error' => 'Do not get request token.' ]);
+			}
+			else
+			{
+				$access_token = $client->get_access_token( $code );
+				return response()->json([ 'access_token' => $access_token ]);
+			}
+		}
+		catch( TokenResponseException $e ) {
+			return response()->json([ 'error' => $e->getMessage() ]);
+		}
+
+		return response()->json([ 'error' => 'Invalid result.' ]);
+
+	}
+
+	public function loginOAuthOld(Request $request)
+	{
 		// get pocket service
 		$pocketService = \OAuth::consumer('Pocket',url('/loginresult'));
 

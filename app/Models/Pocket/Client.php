@@ -58,5 +58,44 @@ class Client
 
 		return $result;
 	}
+
+	public function get_request_token( $redirect_uri )
+	{
+		$params = [
+			'consumer_key' => $this->common_params['consumer_key'],
+			'redirect_uri' => $redirect_uri
+		];
+
+		$response = $this->client->request('POST', '/v3/oauth/request', ['json' => $params ]);
+
+		$response_body = $response->getBody()->getContents();
+		$result = explode("=", $response_body );
+
+		return [ $result[0] => $result[1] ];
+	}
+
+	public function get_redirect_authorize( $request_token, $redirect_uri )
+	{
+		return "https://getpocket.com/auth/authorize?request_token={$request_token}&redirect_uri={$redirect_uri}";
+	}
+
+	public function get_access_token( $code )
+	{
+		$params = [
+			'consumer_key' => $this->common_params['consumer_key'],
+			'code' => $code
+		];
+
+		$response = $this->client->request('POST', '/v3/oauth/authorize', ['json' => $params ]);
+		$response_body = $response->getBody()->getContents();
+
+		$result = [];
+		foreach (explode('&', $response_body) as $chunk) {
+			$param = explode("=", $chunk);
+			$result = array_merge( $result, [ $param[0] => $param[1] ] );
+		}
+
+		return $result;
+	}
 }
 
