@@ -1,0 +1,9 @@
+version: "3.4"
+services:
+  app: 
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: "gcr.io/${GOOGLE_PROJECT_ID}/bmkeep"
+    ports: 
+      - "8080:8080"
