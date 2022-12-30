@@ -24,3 +24,4 @@ Route::get('retrieve', 'App\Http\Controllers\PocketController@getRetrieve' );
 Route::get('delkept', 'App\Http\Controllers\PocketController@getDelkept' );
 Route::get('loginhatena', 'App\Http\Controllers\HatenaController@loginWithHatena' );
 Route::get('bookmark', 'App\Http\Controllers\HatenaController@getBookmark' );
+Route::get('rss', 'App\Http\Controllers\RssController@getRetrieve' );
