@@ -59,7 +59,7 @@ class Datastore
 	{
 		if( is_null($user_id) )
 		{
-			$user_id = config('accounts.twitter.user_id');
+			$user_id = config('pocket.user_id');
 		}
 
 		return $this->insert([
