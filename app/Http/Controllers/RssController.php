@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Google\Datastore;
 use App\Models\Pocket\Client as PocketClient;
@@ -62,6 +63,7 @@ class RssController extends Controller
 					{
 						$actions = array_merge( $actions, $news->getParamAdd() );
 						$news_list[] = $news;
+						Log::info('add url: ' . $news->getUrl());
 						$item_cnt++;
 					}
 
