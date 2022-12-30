@@ -5,7 +5,7 @@ COPY . /app
 RUN composer install --no-dev
 
 # Laravel の実行環境用のコンテナ
-FROM php:8.0-apache
+FROM php:8.1-apache
 #RUN docker-php-ext-install pdo pdo_mysql
 
 EXPOSE 8080
