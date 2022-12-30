@@ -35,13 +35,22 @@ class RssController extends Controller
 				}
 			}
 
-			if ( !empty($data[0]) )
+			$actions = [];
+			$client = new PocketClient();
+			for ($i = 0; $i < 3; $i++)
 			{
-				$client = new PocketClient();
-				$result = $client->add_single_item( $data[0]->getUrl(), $data[0]->getTitle() );
-
-				dd($result);
+				if ( !empty($data[$i]) )
+				{
+					$actions = array_merge( $actions, $data[$i]->getParamAdd() );
+				}
 			}
+
+			$add_result = [];
+			if( !empty($actions) )
+			{
+				$add_result = $client->send_actions( $actions );
+			}
+			dd($add_result);
         }
     }
 }

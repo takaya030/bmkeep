@@ -42,4 +42,16 @@ class NewsItem
 	{
 		return $this->timestamp;
 	}
+
+	public function getParamAdd()
+	{
+		return [
+			json_encode([
+				'action'	=> 'add',
+				'time'	=> $this->timestamp,
+				'title'	=> $this->title,
+				'url'	=> $this->url,
+			])
+		];
+	}
 }
