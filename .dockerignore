@@ -1,0 +1,6 @@
+.env
+.git
+strage/framework/sessions/*
+strage/framework/views/*
+strage/logs/*
+vendor/
