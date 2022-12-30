@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.0",
-        "league/oauth1-client": "^1.10"
+        "league/oauth1-client": "^1.10",
+        "simplepie/simplepie": "^1.7"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
