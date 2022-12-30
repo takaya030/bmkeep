@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-//use App\Models\Pocket\Client as PocketClient;
+use App\Models\Pocket\Client as PocketClient;
 //use App\Models\Pocket\Item as PocketItem;
 use App\Models\HatenaBookmark\NewsItem;
 
@@ -33,6 +33,14 @@ class RssController extends Controller
 				{
 					array_unshift( $data, $news );
 				}
+			}
+
+			if ( !empty($data[0]) )
+			{
+				$client = new PocketClient();
+				$result = $client->add_single_item( $data[0]->getUrl(), $data[0]->getTitle() );
+
+				dd($result);
 			}
         }
     }

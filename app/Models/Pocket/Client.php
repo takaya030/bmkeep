@@ -59,6 +59,23 @@ class Client
 		return $result;
 	}
 
+	public function add_single_item( $url, $title )
+	{
+		$params = [
+			'url'			=> $url,
+			'title'			=> $title,
+			'consumer_key'	=> $this->common_params['consumer_key'],
+			'access_token'	=> $this->common_params['access_token'],
+		];
+
+		$response = $this->client->request('POST', '/v3/add', ['json' => $params ]);
+
+		$response_body = (string)$response->getBody();
+		$result = json_decode( $response_body );
+
+		return $result;
+	}
+
 	public function get_request_token( $redirect_uri )
 	{
 		$params = [
