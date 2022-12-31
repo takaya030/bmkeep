@@ -9,5 +9,6 @@ return [
 	*/
 
 	'feed_url' => env('RSS_FEED_URL'),
+	'valid_hours' => env('RSS_VALID_HOURS'),
 
 ];

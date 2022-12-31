@@ -34,7 +34,7 @@ class RssController extends Controller
         if ($success)
         {
 			$data = [];
-			$oldest_timestamp = Carbon::now()->subHours(96)->timestamp;
+			$oldest_timestamp = Carbon::now()->subHours((int)config('rss.valid_hours'))->timestamp;
 			foreach ($feed->get_items() as $item) {
 				$news = new NewsItem( $item );
 				if( $news->getTimestamp() > $oldest_timestamp )
@@ -109,5 +109,32 @@ class RssController extends Controller
 		}
 
 		return $result;
+	}
+
+	public function getDelent(Request $request)
+	{
+		$dsc = new DatastoreClient([
+			'keyFilePath' => storage_path( config('google.key_file') )
+		]);
+		$datastore = new Datastore( $dsc, config('google.datastore_kind') );
+
+		$oldest_timestamp = Carbon::now()->subHours((int)config('rss.valid_hours'))->timestamp;
+		$entities = $datastore->getBeforeAll( $oldest_timestamp );
+
+		$delents = [];
+		foreach( $entities as $entity )
+		{
+			$delents[] = $entity->key();
+		}
+
+		if( !empty( $delents ) )
+		{
+			$result = $datastore->deleteBatch( $delents );
+			app('log')->info('delete ent ids: ' . implode(",",$delents));
+		}
+
+		return response()->json([
+			'del_ents_cnt' => count($delents),
+		]);
 	}
 }
