@@ -130,7 +130,7 @@ class RssController extends Controller
 		if( !empty( $delents ) )
 		{
 			$result = $datastore->deleteBatch( $delents );
-			app('log')->info('delete ent ids: ' . implode(",",$delents));
+			Log::info('delete ent ids: ' . implode(",",$delents));
 		}
 
 		return response()->json([
