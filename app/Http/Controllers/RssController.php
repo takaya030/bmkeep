@@ -14,6 +14,7 @@ use App\Models\HatenaBookmark\NewsItem;
 use \Carbon\Carbon;
 use Google\Cloud\Datastore\DatastoreClient;
 use \SimplePie\SimplePie;
+use stdClass;
 use Throwable;
 
 class RssController extends Controller
@@ -74,10 +75,15 @@ class RssController extends Controller
 				}
 			}
 
-			$add_result = [];
+			$add_result = new stdClass;
 			if( !empty($actions) )
 			{
 				$add_result = $client->send_actions( $actions );
+			}
+			else
+			{
+				$add_result->status = 200;
+				$add_result->action_errors = [];
 			}
 
 			$insert_result = [];
@@ -89,6 +95,8 @@ class RssController extends Controller
 					sleep(2);
 				}
 			}
+
+			Log::info('status:' . $add_result->status . ', insert_result:' . json_encode($insert_result) . ', errors:' . json_encode($add_result->action_errors));
 
 			return response()->json([
 				"status" => $add_result->status,
