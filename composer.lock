@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "453666ec963656409070962ecb54276a",
+    "content-hash": "ce94a8756c8c0077f6dd69b73e87abfc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -875,6 +875,57 @@
                 "source": "https://github.com/googleapis/google-cloud-php-datastore/tree/v1.17.1"
             },
             "time": "2022-12-13T22:56:52+00:00"
+        },
+        {
+            "name": "google/cloud-tasks",
+            "version": "v1.11.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/googleapis/google-cloud-php-tasks.git",
+                "reference": "e27adfa51eb29f86002d850525a3c9e112db7bc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-tasks/zipball/e27adfa51eb29f86002d850525a3c9e112db7bc6",
+                "reference": "e27adfa51eb29f86002d850525a3c9e112db7bc6",
+                "shasum": ""
+            },
+            "require": {
+                "google/gax": "^1.1"
+            },
+            "require-dev": {
+                "google/cloud-core": "^1.39",
+                "phpunit/phpunit": "^4.8|^5.0|^8.0",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "ext-grpc": "Enables use of gRPC, a universal high-performance RPC framework created by Google.",
+                "ext-protobuf": "Provides a significant increase in throughput over the pure PHP protobuf implementation. See https://cloud.google.com/php/grpc for installation instructions."
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "id": "cloud-tasks",
+                    "path": "Tasks",
+                    "entry": null,
+                    "target": "googleapis/google-cloud-php-tasks.git"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Google\\Cloud\\Tasks\\": "src",
+                    "GPBMetadata\\Google\\Cloud\\Tasks\\": "metadata"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Google Cloud Tasks Client for PHP",
+            "support": {
+                "source": "https://github.com/googleapis/google-cloud-php-tasks/tree/v1.11.8"
+            },
+            "time": "2023-01-27T18:26:22+00:00"
         },
         {
             "name": "google/common-protos",

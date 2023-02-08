@@ -11,6 +11,7 @@
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "google/cloud-datastore": "^1.17",
+        "google/cloud-tasks": "^1.11",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.0",
