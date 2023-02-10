@@ -98,6 +98,62 @@ class PocketController extends Controller
 		return [];
 	}
 
+	public function getSendhatena(Request $request)
+	{
+		try {
+			$client = new PocketClient();
+
+			$result = $client->retrieve([
+				'state' => 'all',
+				'sort' => 'oldest',
+				'tag' => config('pocket.keep_tag'),
+				'count' => config('pocket.items_count'),
+			]);
+
+			$pocket_items = [];
+			foreach( $result->list as $item )
+			{
+				$pocket_items[] = new PocketItem( $item );
+			}
+
+			$item = array_shift( $pocket_items );
+			if( $item )
+			{
+				// post Hatena
+				$hatena = new HatenaClient();
+				$hatena_result = $hatena->postBookmark( $item->get_param_post_hatena() );
+
+				if( isset($hatena_result["created_epoch"]) )
+				{
+					// tag replace
+					$actions = [];
+					$actions = array_merge( $actions, $item->get_param_tag_replace() );
+
+					$tags_result = [];
+					if( !empty($actions) )
+					{
+						$tags_result = $client->send_actions( $actions );
+					}
+
+					return response()->json($tags_result);
+				}
+				else
+				{
+					return response()->json(['msg' => 'Invalid Hatena result']);
+				}
+			}
+			else
+			{
+				return response()->json(['msg' => 'No Pocket items']);
+			}
+		}
+		catch( Throwable $e ) {
+			return response()->json([ 'error' => $e->getMessage() ]);
+		}
+
+		return response()->json(['msg' => 'Unexpected result']);
+	}
+
 	public function getDelkept(Request $request)
 	{
 		try {
