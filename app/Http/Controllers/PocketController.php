@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Pocket\Client as PocketClient;
 use App\Models\Pocket\Item as PocketItem;
@@ -119,6 +120,12 @@ class PocketController extends Controller
 			$item = array_shift( $pocket_items );
 			if( $item )
 			{
+				$hatena_param = $item->get_param_post_hatena();
+				$pocket_param = $item->get_item_id();
+
+				return response()->json( $this->procTaskHatena($hatena_param, $pocket_param) );
+
+				/*
 				// post Hatena
 				$hatena = new HatenaClient();
 				$hatena_result = $hatena->postBookmark( $item->get_param_post_hatena() );
@@ -141,6 +148,7 @@ class PocketController extends Controller
 				{
 					return response()->json(['msg' => 'Invalid Hatena result']);
 				}
+				*/
 			}
 			else
 			{
@@ -153,6 +161,69 @@ class PocketController extends Controller
 
 		return response()->json(['msg' => 'Unexpected result']);
 	}
+
+	protected function procTaskHatena($hatena_param, $pocket_param)
+	{
+		// post Hatena
+		$hatena = new HatenaClient();
+		$hatena_result = $hatena->postBookmark( $hatena_param );
+
+		if( isset($hatena_result["created_epoch"]) )
+		{
+			Log::info("success to post hatena: " . $hatena_param);
+			$item = new PocketItem($pocket_param);
+			// tag replace
+			$actions = [];
+			$actions = array_merge( $actions, $item->get_param_tag_replace() );
+
+			$tags_result = [];
+			if( !empty($actions) )
+			{
+				$client = new PocketClient();
+				$tags_result = $client->send_actions( $actions );
+				Log::info("result to replace pocket tags: item_id=" . $item->get_item_id() . ",  " . json_encode($tags_result));
+			}
+			else
+			{
+				Log::info("No Pocket actions  item_id: " . $item->get_item_id());
+			}
+
+			return $tags_result;
+		}
+
+		return ['msg' => 'Invalid Hatena result'];
+	}
+
+	/*
+	public function getTaskHatena(Request $request)
+	{
+		$hatena_param = $request->get('hatena');
+		$pocket_param = $request->get('pocket');
+
+		// post Hatena
+		$hatena = new HatenaClient();
+		$hatena_result = $hatena->postBookmark( $hatena_param );
+
+		if( isset($hatena_result["created_epoch"]) )
+		{
+			$item = new PocketItem($pocket_param);
+			// tag replace
+			$actions = [];
+			$actions = array_merge( $actions, $item->get_param_tag_replace() );
+
+			$tags_result = [];
+			if( !empty($actions) )
+			{
+				$client = new PocketClient();
+				$tags_result = $client->send_actions( $actions );
+			}
+
+			return response()->json($tags_result);
+		}
+
+		return response()->json(['msg' => 'Invalid Hatena result']);
+	}
+	*/
 
 	public function getDelkept(Request $request)
 	{

@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::get('login', 'App\Http\Controllers\PocketController@loginOAuth' );
 Route::get('retrieve', 'App\Http\Controllers\PocketController@getRetrieve' );
 Route::get('sendhatena', 'App\Http\Controllers\PocketController@getSendhatena' );
+//Route::get('taskhatena', 'App\Http\Controllers\PocketController@getTaskHatena' )->name('taskhatena');
 Route::get('delkept', 'App\Http\Controllers\PocketController@getDelkept' );
 
 Route::get('loginhatena', 'App\Http\Controllers\HatenaController@loginWithHatena' );
