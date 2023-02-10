@@ -16,12 +16,20 @@ class Item
 
 
     /**
-     * @param mixed $list_item [require] A Pocket post item that json decoed.
+     * @param mixed $list_item A Pocket post item that json decoed | pocket item id
      */
 	public function __construct( $list_item )
 	{
-		$this->parse( $list_item );
-		$this->replace_tag( config('pocket.keep_tag'), config('pocket.kept_tag') );
+		if(is_numeric($list_item))
+		{
+			$this->item_id = $list_item;
+			$this->tags = [];
+		}
+		else
+		{
+			$this->parse( $list_item );
+			$this->replace_tag( config('pocket.keep_tag'), config('pocket.kept_tag') );
+		}
 	}
 
 	private function parse( $list_item )
@@ -94,5 +102,10 @@ class Item
 				'item_id'	=> $this->item_id,
 			])
 		];
+	}
+
+	public function get_item_id()
+	{
+		return $this->item_id;
 	}
 }
