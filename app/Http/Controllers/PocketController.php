@@ -74,23 +74,13 @@ class PocketController extends Controller
 			$hatena = new HatenaClient();
 			foreach( $pocket_items as $item )
 			{
-				$hatena_result = $hatena->postBookmark( $item->get_param_post_hatena() );
+				$hatena_param = $item->get_param_post_hatena();
+				$pocket_param = $item->get_item_id();
+
+				$this->procTaskHatena($hatena_param, $pocket_param);
 			}
 
-			// tag replace
-			$actions = [];
-			foreach( $pocket_items as $item )
-			{
-				$actions = array_merge( $actions, $item->get_param_tag_replace() );
-			}
-
-			$tags_result = [];
-			if( !empty($actions) )
-			{
-				$tags_result = $client->send_actions( $actions );
-			}
-
-			return response()->json($tags_result);
+			return response()->json([ 'msg' => "Finish getRetrieve" ]);
 		}
 		catch( Throwable $e ) {
 			return response()->json([ 'error' => $e->getMessage() ]);
@@ -170,7 +160,7 @@ class PocketController extends Controller
 
 		if( isset($hatena_result["created_epoch"]) )
 		{
-			Log::info("success to post hatena: " . $hatena_param);
+			Log::info("Success to post Hatena: " . $hatena_param);
 			$item = new PocketItem($pocket_param);
 			// tag replace
 			$actions = [];
@@ -181,7 +171,7 @@ class PocketController extends Controller
 			{
 				$client = new PocketClient();
 				$tags_result = $client->send_actions( $actions );
-				Log::info("result to replace pocket tags: item_id=" . $item->get_item_id() . ",  " . json_encode($tags_result));
+				Log::info("Result to replace Pocket tags: item_id=" . $item->get_item_id() . ",  " . json_encode($tags_result));
 			}
 			else
 			{
@@ -191,7 +181,8 @@ class PocketController extends Controller
 			return $tags_result;
 		}
 
-		return ['msg' => 'Invalid Hatena result'];
+		Log::info("Fail to post Hatena: " . $hatena_param);
+		return ['msg' => 'Fail to post hatena'];
 	}
 
 	/*
