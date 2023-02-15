@@ -1,8 +1,8 @@
 # composer 用
 FROM composer:2 as build
 WORKDIR /app
-COPY . /app
-RUN composer install --no-dev
+COPY composer.json composer.lock /app
+RUN composer install --no-dev --no-scripts
 
 # Laravel の実行環境用のコンテナ
 FROM php:8.1-apache
@@ -10,6 +10,7 @@ FROM php:8.1-apache
 
 EXPOSE 8080
 COPY --from=build /app /var/www/
+COPY . /var/www
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY .env.prd /var/www/.env
 RUN chmod 777 -R /var/www/storage/ && \
