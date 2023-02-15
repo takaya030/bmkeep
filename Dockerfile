@@ -21,4 +21,5 @@ RUN chmod 777 -R /var/www/storage/ && \
 WORKDIR /var/www
 RUN php artisan optimize:clear && \
 	php artisan optimize && \
-	php artisan view:cache
+	php artisan view:cache && \
+    chown -R www-data:www-data /var/www
