@@ -48,7 +48,7 @@ class NewsItem
 		return [
 			json_encode([
 				'action'	=> 'add',
-				'time'	=> $this->timestamp,
+				//'time'	=> $this->timestamp,
 				'title'	=> $this->title,
 				'url'	=> $this->url,
 			])
