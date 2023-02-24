@@ -29,4 +29,5 @@ Route::get('loginhatena', 'App\Http\Controllers\HatenaController@loginWithHatena
 Route::get('bookmark', 'App\Http\Controllers\HatenaController@getBookmark' );
 
 Route::get('rss', 'App\Http\Controllers\RssController@getRetrieve' );
+Route::get('rsshatena', 'App\Http\Controllers\RssController@getRetrieveHatena' );
 Route::get('delent', 'App\Http\Controllers\RssController@getDelent' );
