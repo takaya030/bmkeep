@@ -45,6 +45,7 @@ class NewsItem
 
 	public function getParamAdd()
 	{
+		// for Pocket add action
 		return [
 			json_encode([
 				'action'	=> 'add',
@@ -53,5 +54,14 @@ class NewsItem
 				'url'	=> $this->url,
 			])
 		];
+	}
+
+	public function getParamPostHatena()
+	{
+		$url_str = 'url=' . $this->url;
+		$tags_str = '&comment=[あとで読む]';
+		$url_str .= $tags_str;
+
+		return $url_str;
 	}
 }
