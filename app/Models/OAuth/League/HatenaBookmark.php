@@ -14,7 +14,7 @@ class HatenaBookmark extends Server
      */
     public function urlTemporaryCredentials()
     {
-        return 'https://www.hatena.com/oauth/initiate?scope=read_public%2Cwrite_public';
+        return 'https://www.hatena.com/oauth/initiate?scope=read_public%2Cwrite_public%2Cread_private%2Cwrite_private';
     }
 
     /**
