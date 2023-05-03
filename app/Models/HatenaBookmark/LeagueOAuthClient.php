@@ -54,6 +54,16 @@ class LeagueOAuthClient
 			$body = [];
 		}
 
+		if($method == 'DELETE' && !empty($body) && is_array($body))
+		{
+			$options["form_params"] = $body;
+		}
+		elseif($method == 'DELETE' && !empty($body) && !is_array($body))
+		{
+			$options["body"] = $body;		// for json body
+			$body = [];
+		}
+
 		if($method == 'GET' && !empty($body) && is_array($body))
 		{
 			$options["query"] = $body;
@@ -92,6 +102,14 @@ class LeagueOAuthClient
 	public function getTags()
 	{
 		$result = json_decode($this->request('my/tags','GET'), true);
+
+		return $result;
+	}
+
+	public function deleteBookmark( string $url )
+	{
+		$body = ['url' => $url];
+		$result = json_decode($this->request('my/bookmark', 'DELETE', $body), true);
 
 		return $result;
 	}

@@ -11,13 +11,12 @@ use App\Models\Pocket\Client as PocketClient;
 
 use App\Models\HatenaBookmark\LeagueOAuthClient as HatenaClient;
 use App\Models\HatenaBookmark\NewsItem;
-use \App\Models\HatenaBookmark\LeagueOAuthClient;
 
 use \Carbon\Carbon;
 use Google\Cloud\Datastore\DatastoreClient;
 use \SimplePie\SimplePie;
 use stdClass;
-//use Throwable;
+use Throwable;
 
 class RssController extends Controller
 {
@@ -143,9 +142,8 @@ class RssController extends Controller
 
 				$url_list = $this->makeStoredUrlList( $datastore );
 
-				$actions = [];
+				//$actions = [];
 				$news_list = [];
-				//$client = new PocketClient();
 				$hatena = new HatenaClient();
 
 				foreach( $data as $news )
@@ -253,7 +251,7 @@ class RssController extends Controller
 
 		// "あとで読む"の件数取得
 
-		$hbm = new LeagueOAuthClient();
+		$hbm = new HatenaClient();
 		$result = $hbm->getTags();
 		$tagItems = array_values(
 			array_filter($result["tags"], function($var){ return $var["tag"] === "あとで読む"; })
@@ -293,15 +291,33 @@ class RssController extends Controller
 				if($a->getTimestamp() == $b->getTimeStamp()){ return 0; }
 				return ($a->getTimestamp() < $b->getTimeStamp())? -1 : 1;
 			});
-			$target_items = array_slice($data, 0, (int)config('hatenabookmark.ril_max_delete_items') );
+			$target_items = array_slice($data, 0, $limit );
 		}
 
-		// 保持件数超過のとき
-			// 超過分を削除
+		$remain_number = $ril_number;
+		$ril_valid_items = (int)config('hatenabookmark.ril_valid_items');
+		foreach($target_items as $target_item)
+		{
+			if($remain_number > $ril_valid_items)
+			{
+				try {
+					// 保持件数超過のとき
+					// 超過分を削除
+					$hbm->deleteBookmark( $target_item->getUrl() );
+					Log::info('delete atodeyomu url: ' . $target_item->getUrl());
+				}
+				catch( Throwable $e ) {
+					Log::error($e->getMessage());
+				}
+				$remain_number--;
+			}
+			// 保持件数以内のとき
+				// 保存期間を越えていたら削除
+		}
 
-		// 保持件数以内のとき
-			// 保存期間を越えていたら削除
-
-		dd([$ril_number, $ril_last_page, $target_items]);
+		return response()->json([
+			"ril_number" => $ril_number,
+			"ril_last_page" => $ril_last_page,
+		]);
 	}
 }
