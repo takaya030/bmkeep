@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\Google\Datastore;
 use App\Models\Pocket\Client as PocketClient;
+
+use App\Models\HatenaBookmark\LeagueOAuthClient as HatenaClient;
 use App\Models\HatenaBookmark\NewsItem;
 use \App\Models\HatenaBookmark\LeagueOAuthClient;
 
@@ -105,6 +107,102 @@ class RssController extends Controller
 			]);
         }
     }
+
+	public function getRetrieveHatena(Request $request)
+	{
+		$this->validate($request, [
+            'limit' => 'required|integer|min:1|max:5',
+        ]);
+		$limit = (int)$request->input('limit');
+
+        $feed = new SimplePie();
+		$feed->set_feed_url( config('rss.feed_url') );
+		$feed->enable_cache(false);     //キャッシュ機能はオフで使う
+		$success = $feed->init();
+		$feed->handle_content_type();
+
+        if ($success)
+        {
+			$data = [];
+			$oldest_timestamp = Carbon::now()->subHours((int)config('rss.valid_hours'))->timestamp;
+			foreach ($feed->get_items() as $item) {
+				$news = new NewsItem( $item );
+				if( $news->getTimestamp() > $oldest_timestamp )
+				{
+					array_unshift( $data, $news );
+				}
+			}
+
+			$item_cnt = 0;
+			if ( isset($data[0]) )
+			{
+				$dsc = new DatastoreClient([
+					'keyFilePath' => storage_path( config('google.key_file') )
+				]);
+				$datastore = new Datastore( $dsc, config('google.datastore_kind') );
+
+				$url_list = $this->makeStoredUrlList( $datastore );
+
+				$actions = [];
+				$news_list = [];
+				//$client = new PocketClient();
+				$hatena = new HatenaClient();
+
+				foreach( $data as $news )
+				{
+					if( !in_array( $news->getUrl(), $url_list, true ) )
+					{
+						$news_list[] = $news;
+						Log::info('add url: ' . $news->getUrl());
+						$item_cnt++;
+					}
+
+					if ($item_cnt >= $limit)
+					{
+						break;
+					}
+				}
+			}
+
+			$add_result = new stdClass;
+			$add_result->status = 200;
+			$add_result->action_errors = [];
+			if( !empty($news_list) )
+			{
+				foreach( $news_list as $news )
+				{
+					$hatena_result = $hatena->postBookmark( $news->getParamPostHatena() );
+					if( isset($hatena_result["created_epoch"]) )
+					{
+						$add_result->action_errors[] = null;
+					}
+					else
+					{
+						$add_result->action_errors[] = true;
+					}
+					sleep(2);
+				}
+			}
+
+			$insert_result = [];
+			foreach( $add_result->action_errors as $i => $error )
+			{
+				if ( is_null($error) )
+				{
+					$insert_result[] = $datastore->insertNewsitem( $news_list[$i] );
+					sleep(2);
+				}
+			}
+
+			Log::info('status:' . $add_result->status . ', insert_result:' . json_encode($insert_result) . ', errors:' . json_encode($add_result->action_errors));
+
+			return response()->json([
+				"status" => $add_result->status,
+				"insert_result" => $insert_result,
+				"errors" => $add_result->action_errors
+			]);
+        }
+	}
 
 	private function makeStoredUrlList( Datastore $ds )
 	{

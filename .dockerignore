@@ -2,9 +2,9 @@
 .git
 Dockerfile
 docker-compose.*
-bootstrap/cache/**
-strage/framework/cache/**
-strage/framework/sessions/**
-strage/framework/views/**
-strage/logs/**
+bootstrap/cache/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
 vendor

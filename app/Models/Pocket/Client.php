@@ -41,17 +41,18 @@ class Client
 		if( is_string($params) )
 		{
 			$query = array_merge( [ 'actions' => '[' . $params . ']' ],  $this->common_params );
+			$query_str = http_build_query( $query );
+			$response = $this->client->request('POST', '/v3/send?' . $query_str );
 		}
 		elseif( is_array($params) )
 		{
 			$query = array_merge( [ 'actions' => '[' . implode(',', $params) . ']' ],  $this->common_params );
+			$response = $this->client->request('POST', '/v3/send', ['form_params' => $query ]);
 		}
 		else
 		{
 			return ["msg" => "params is invalid type."];
 		}
-		$query_str = http_build_query( $query );
-		$response = $this->client->request('POST', '/v3/send?' . $query_str );
 
 		$response_body = (string)$response->getBody();
 		$result = json_decode( $response_body );
