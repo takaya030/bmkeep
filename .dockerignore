@@ -1,5 +1,7 @@
 .env
 .git
+Dockerfile
+docker-compose.*
 bootstrap/cache/*
 storage/framework/cache/*
 storage/framework/sessions/*

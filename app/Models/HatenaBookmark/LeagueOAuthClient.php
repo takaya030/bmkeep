@@ -88,4 +88,11 @@ class LeagueOAuthClient
 
 		return $result;
 	}
+
+	public function getTags()
+	{
+		$result = json_decode($this->request('my/tags','GET'), true);
+
+		return $result;
+	}
 }
