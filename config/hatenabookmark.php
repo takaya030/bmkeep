@@ -14,7 +14,7 @@ return [
 	'access_token_secret' 	=> env('HATENA_ACCESS_TOKEN_SECRET'),
 
 	// for "read it later"
-	'ril_valid_itmes' 	=> env('RIL_VALID_ITEMS'),
+	'ril_valid_days' 	=> env('RIL_VALID_DAYS'),
 	'ril_items_in_page' => env('RIL_ITEMS_IN_PAGE'),
 	'ril_feed_url' => env('RIL_FEED_URL'),
 
