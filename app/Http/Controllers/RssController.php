@@ -294,29 +294,32 @@ class RssController extends Controller
 			$target_items = array_slice($data, 0, $limit );
 		}
 
+		$del_items = 0;
 		$remain_number = $ril_number;
-		$ril_valid_items = (int)config('hatenabookmark.ril_valid_items');
+		$ril_valid_days = (int)config('hatenabookmark.ril_valid_days');
+		$oldest_timestamp = Carbon::now()->subDays($ril_valid_days)->timestamp;
 		foreach($target_items as $target_item)
 		{
-			if($remain_number > $ril_valid_items)
+			if($target_item->getTimestamp() < $oldest_timestamp)
 			{
 				try {
-					// 保持件数超過のとき
-					// 超過分を削除
+					// 保持期間を過ぎたら削除
 					$hbm->deleteBookmark( $target_item->getUrl() );
 					Log::info('delete atodeyomu url: ' . $target_item->getUrl());
+
+					$remain_number--;
+					$del_items++;
 				}
 				catch( Throwable $e ) {
 					Log::error($e->getMessage());
 				}
-				$remain_number--;
 			}
-			// 保持件数以内のとき
-				// 保存期間を越えていたら削除
 		}
+		Log::info('del_itmes: ' . $del_items);
 
 		return response()->json([
-			"ril_number" => $ril_number,
+			"del_items" => $del_items,
+			"ril_remain_number" => $remain_number,
 			"ril_last_page" => $ril_last_page,
 		]);
 	}
