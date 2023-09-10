@@ -315,7 +315,7 @@ class RssController extends Controller
 				}
 			}
 		}
-		Log::info('del_itmes: ' . $del_items);
+		Log::info('del_items: ' . $del_items);
 
 		return response()->json([
 			"del_items" => $del_items,
