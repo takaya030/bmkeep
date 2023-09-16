@@ -4,6 +4,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: "us-west1-docker.pkg.dev/${GOOGLE_PROJECT_ID}/my-repo/bmkeep"
+    image: "us-west2-docker.pkg.dev/${GOOGLE_PROJECT_ID}/uw2-repo/bmkeep"
     ports: 
       - "8080:8080"
