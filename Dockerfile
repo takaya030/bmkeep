@@ -16,7 +16,6 @@ COPY .env.prd /var/www/.env
 RUN chmod 777 -R /var/www/storage/ && \
     echo "Listen 8080" >> /etc/apache2/ports.conf && \
     echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf && \
-    chown -R www-data:www-data /var/www/ && \
     a2enmod rewrite
 
 WORKDIR /var/www
