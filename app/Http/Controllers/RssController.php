@@ -48,9 +48,7 @@ class RssController extends Controller
 			$item_cnt = 0;
 			if ( isset($data[0]) )
 			{
-				$dsc = new DatastoreClient([
-					'keyFilePath' => storage_path( config('google.key_file') )
-				]);
+				$dsc = new DatastoreClient();
 				$datastore = new Datastore( $dsc, config('google.datastore_kind') );
 
 				$url_list = $this->makeStoredUrlList( $datastore );
@@ -135,9 +133,7 @@ class RssController extends Controller
 			$item_cnt = 0;
 			if ( isset($data[0]) )
 			{
-				$dsc = new DatastoreClient([
-					'keyFilePath' => storage_path( config('google.key_file') )
-				]);
+				$dsc = new DatastoreClient();
 				$datastore = new Datastore( $dsc, config('google.datastore_kind') );
 
 				$url_list = $this->makeStoredUrlList( $datastore );
@@ -217,9 +213,7 @@ class RssController extends Controller
 
 	public function getDelent(Request $request)
 	{
-		$dsc = new DatastoreClient([
-			'keyFilePath' => storage_path( config('google.key_file') )
-		]);
+		$dsc = new DatastoreClient();
 		$datastore = new Datastore( $dsc, config('google.datastore_kind') );
 
 		$oldest_timestamp = Carbon::now()->subHours((int)config('rss.valid_hours'))->timestamp;
