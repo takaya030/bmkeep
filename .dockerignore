@@ -3,6 +3,7 @@
 Dockerfile
 docker-compose.*
 bootstrap/cache/*
+storage/app/*.json
 storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
